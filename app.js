@@ -6,6 +6,16 @@ const toneInput = document.getElementById("tone");
 const statusText = document.getElementById("status");
 const resultText = document.getElementById("results");
 
+function renderError() {
+  statusText.textContent = "Error: please fill in both inputs";
+  resultText.textContent = "";
+}
+
+function renderReady() {
+  statusText.textContent = "Inputs Look Good";
+  resultText.textContent = "";
+}
+
 async function main(event) {
   try {
     event.preventDefault();
@@ -15,6 +25,12 @@ async function main(event) {
     console.log("Topic:", topic);
     console.log("Tone:", tone);
     // console.log(event);
+
+    if (!topic || !tone) {
+      renderError();
+      return;
+    }
+    renderReady();
   } catch (error) {
     console.error(error);
   }
