@@ -6,11 +6,12 @@ const toneInput = document.getElementById("tone");
 const statusText = document.getElementById("status");
 const resultText = document.getElementById("results");
 
-async function main() {
+async function main(event) {
   try {
+    event.preventDefault;
   } catch (error) {
     console.error(error);
   }
 }
 
-main();
+searchForm.addEventListener("submit", main);
