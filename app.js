@@ -78,6 +78,11 @@ async function callAI(topic, tone, key) {
   return data;
 }
 
+function renderSuccess(text) {
+  statusText.textContent = "Success!";
+  resultText.textContent = text;
+}
+
 async function main(event) {
   try {
     event.preventDefault();
@@ -97,6 +102,12 @@ async function main(event) {
 
     const key = await getKey();
     console.log("API key: " + key);
+
+    const aiData = await callAI(topic, tone, key);
+    // console.log("AI Data:", aiData);
+
+    const responseText = aiData.result.response;
+    renderSuccess(responseText);
   } catch (error) {
     console.error(error);
     renderError(error.message);
