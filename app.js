@@ -39,6 +39,45 @@ async function getKey() {
   } catch (error) {}
 }
 
+async function callAI(topic, tone, key) {
+  const proxyURL = "https://corsproxy.io/?url=";
+
+  const workersEndpoint =
+    "https://api.cloudflare.com/client/v4/accounts/83cf2c15a58cddcc9466f6057963dbf9/ai/run/@cf/meta/llama-3-8b-instruct";
+
+  const url = proxyURL + workersEndpoint;
+
+  const promptBody = {
+    messages: [
+      {
+        role: "system",
+        content: `You are a music store sales assistant. Respond in a ${tone} tone. Keep the answer short and focused on products.`,
+      },
+      {
+        role: "user",
+        content: `Tell me about ${topic} and what products you sell related to it.`,
+      },
+    ],
+  };
+
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${key}`,
+    },
+    body: JSON.stringify(promptBody),
+  };
+
+  const res = await fetch(url, options);
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(`Could not get AI response: ${errorText}`);
+  }
+  const data = await res.json();
+  return data;
+}
+
 async function main(event) {
   try {
     event.preventDefault();
