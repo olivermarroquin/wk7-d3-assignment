@@ -8,7 +8,13 @@ const resultText = document.getElementById("results");
 
 async function main(event) {
   try {
-    event.preventDefault;
+    event.preventDefault();
+    const topic = topicInput.value.trim();
+    const tone = toneInput.value.trim();
+    console.log("Form submitted");
+    console.log("Topic:", topic);
+    console.log("Tone:", tone);
+    // console.log(event);
   } catch (error) {
     console.error(error);
   }
